@@ -1,9 +1,9 @@
-// interface NavItem  {
-//     title: string,
-//     leadingIcon: string,
-//     children?: Array<NavItemChild>,
-//     url?: string
-// }
+interface NavItem  {
+    title: string,
+    leadingIcon: string,
+    children?: Array<NavItemChild>,
+    url?: string
+}
 
 interface  NavItemChild  {
     title: string,
