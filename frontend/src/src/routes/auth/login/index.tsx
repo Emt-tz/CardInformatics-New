@@ -1,4 +1,4 @@
-import { component$, useStore, $, useVisibleTask$, useSignal } from "@builder.io/qwik";
+import { component$, useStore, $, useVisibleTask$ } from "@builder.io/qwik";
 import { useLocation } from "@builder.io/qwik-city";
 import { Alert } from "~/components/profile/profile-card";
 import { useAuthSignin } from "~/routes/plugin@auth";
@@ -12,6 +12,7 @@ export const Login = component$(() => {
         error: ""
     })
     const handleLogin = $(async (e: any) => {
+        console.log(e);
         try {
             const response = await loginAction.submit({
                 providerId: 'credentials',
@@ -52,7 +53,7 @@ export const Login = component$(() => {
             </div>
 
             <div class="tile col-lg-4" style="border-radius: 20px; margin: 30px auto 0px auto;">
-                <h3 align="center" style="color:black;"> Sign In </h3>
+                <h3 style="color:black;text-align:center"> Sign In </h3>
             </div>
             <div class="tile col-lg-4" style="margin: 20px auto 0px auto; border-radius: 30px; padding: 25px;">
                 <form>

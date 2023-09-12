@@ -1,13 +1,9 @@
-import { component$, useVisibleTask$ } from "@builder.io/qwik";
-import { DocumentHead } from "@builder.io/qwik-city";
-import { useAuthSession } from "../plugin@auth";
+import { component$ } from "@builder.io/qwik";
 import { CreditOffers } from "~/components/cards/credit_offers";
-import { NewsCard } from "~/components/cards/news_card";
-import { RecentActivity } from "~/components/cards/recent_activity";
 import { SummaryCard } from "~/components/cards/summary_card";
 
 export default component$(() => {
-  const session = useAuthSession()
+  //const session = useAuthSession()
   return (
     <>
       <div class="pagetitle">

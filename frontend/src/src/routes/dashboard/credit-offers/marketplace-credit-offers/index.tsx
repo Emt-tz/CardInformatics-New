@@ -4,7 +4,7 @@ import {  useLocation } from "@builder.io/qwik-city";
 import { CreditOffers } from "~/components/cards/credit_offers";
 
 export default component$(() => {
-    const location = useLocation();
+    //const location = useLocation();
     return (<>
         <div class="pagetitle">
             <h1>Market Place Credit Offers</h1>

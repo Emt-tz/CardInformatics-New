@@ -1,16 +1,15 @@
-import { component$, useStore, $, useVisibleTask$ } from "@builder.io/qwik";
-import { routeAction$ } from "@builder.io/qwik-city";
+import { component$, useStore, $, } from "@builder.io/qwik";
 import { useChangePassword, useLoadProfileDetails } from "~/routes/dashboard/profile";
 
 // Generate the user ID prefix using pure JavaScript
-var currentDate = new Date();
-var year = currentDate.getFullYear().toString().substr(-2); // Get last two digits of the year
-var month = (currentDate.getMonth() + 1).toString().padStart(2, '0'); // Get month with leading zero if needed
-var user_id_prefix = "CI" + year + month;
+const currentDate = new Date();
+const year = currentDate.getFullYear().toString().substr(-2); // Get last two digits of the year
+const month = (currentDate.getMonth() + 1).toString().padStart(2, '0'); // Get month with leading zero if needed
+const user_id_prefix = "CI" + year + month;
 
 
 export const ProfileCard = component$(() => {
-    const details: any = useLoadProfileDetails()
+    //const details: any = useLoadProfileDetails()
 
     return (
         <>
@@ -101,7 +100,7 @@ export const ProfileEdit = component$(() => {
                     <div class="row mb-3">
                         <label for="about" class="col-md-4 col-lg-3 col-form-label">About</label>
                         <div class="col-md-8 col-lg-9">
-                            <textarea name="about" class="form-control" id="about" style="height: 100px" children={`Sunt est soluta temporibus accusantium neque nam maiores cumque temporibus. Tempora libero non est unde veniam est qui dolor. Ut sunt iure rerum quae quisquam autem eveniet perspiciatis odit. Fuga sequi sed ea saepe at unde.`}></textarea>
+                            <textarea name="about" class="form-control" id="about" style="height: 100px" value={`Sunt est soluta temporibus accusantium neque nam maiores cumque temporibus. Tempora libero non est unde veniam est qui dolor. Ut sunt iure rerum quae quisquam autem eveniet perspiciatis odit. Fuga sequi sed ea saepe at unde.`}></textarea>
                         </div>
                     </div>
 

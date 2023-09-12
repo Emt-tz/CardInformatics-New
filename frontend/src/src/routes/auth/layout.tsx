@@ -1,8 +1,5 @@
 import { component$, Slot } from "@builder.io/qwik";
 import { DocumentHead } from "@builder.io/qwik-city";
-import { Footer } from "~/components/footer/footer";
-import { Header } from "~/components/header/header";
-import { SideBar } from "~/components/sidebar/side-bar";
 
 export default component$(() => {
   return (

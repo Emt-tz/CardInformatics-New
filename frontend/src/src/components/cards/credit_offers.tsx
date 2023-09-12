@@ -1,4 +1,4 @@
-import { component$, useStore } from "@builder.io/qwik";
+import { component$} from "@builder.io/qwik";
 
 export const CreditOffers = component$(() => {
     const offers = {
@@ -37,7 +37,7 @@ export const CreditOffers = component$(() => {
                                 <tbody>
                                     {offers.value.map((offer) => {
                                         const status = new Date(offer.app_deadline) < new Date();
-                                        const statusBadgeClass = status ? "badge bg-danger" : "badge bg-success";
+                                        //const statusBadgeClass = status ? "badge bg-danger" : "badge bg-success";
                                         return (
                                             <>
                                                 <tr key={offer.id} data-bs-toggle="modal" data-bs-target={`#largeModal${offer.id}`}>

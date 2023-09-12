@@ -1,5 +1,4 @@
-import { component$, useStore } from "@builder.io/qwik";
-import { time } from "console";
+import { component$ } from "@builder.io/qwik";
 import { NavItemComponent } from "./nav-items";
 
 export const SideBar = component$(() => {

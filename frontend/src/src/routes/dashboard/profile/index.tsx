@@ -1,6 +1,6 @@
 import { component$ } from "@builder.io/qwik";
 import { server$, routeLoader$ } from "@builder.io/qwik-city";
-import { ProfileCard, ProfileChangePassword, ProfileOverview } from "~/components/profile/profile-card";
+import { ProfileCard, ProfileChangePassword, ProfileEdit, ProfileOverview, ProfileSettings } from "~/components/profile/profile-card";
 
 export const useLoadProfileDetails = routeLoader$(async () => {
     // const prisma = new PrismaClient();
@@ -16,7 +16,7 @@ export const useLoadProfileDetails = routeLoader$(async () => {
 
 
 export const useChangePassword = server$(async (data) => {
-    const { id, currentPassword, password } = data;
+    const {  } = data;
 
     try {
         // You can add logic to validate the current password before updating
@@ -73,13 +73,13 @@ export default component$(() => {
                                     <button class="nav-link active" data-bs-toggle="tab" data-bs-target="#profile-overview">Overview</button>
                                 </li>
 
-                                {/* <li class="nav-item">
+                                <li class="nav-item">
                                     <button class="nav-link" data-bs-toggle="tab" data-bs-target="#profile-edit">Edit Profile</button>
-                                </li> */}
+                                </li>
 
-                                {/* <li class="nav-item">
+                                <li class="nav-item">
                                     <button class="nav-link" data-bs-toggle="tab" data-bs-target="#profile-settings">Settings</button>
-                                </li> */}
+                                </li>
 
                                 <li class="nav-item">
                                     <button class="nav-link" data-bs-toggle="tab" data-bs-target="#profile-change-password">Change Password</button>
@@ -88,8 +88,8 @@ export default component$(() => {
                             </ul>
                             <div class="tab-content pt-2">
                                 <ProfileOverview />
-                                {/* <ProfileEdit /> */}
-                                {/* <ProfileSettings /> */}
+                                <ProfileEdit />
+                                <ProfileSettings />
                                 <ProfileChangePassword />
                             </div>
                             {/* End Bordered Tabs */}
