@@ -1,5 +1,4 @@
 import { component$} from "@builder.io/qwik";
-import {  useLocation } from "@builder.io/qwik-city";
 
 import { CreditOffers } from "~/components/cards/credit_offers";
 

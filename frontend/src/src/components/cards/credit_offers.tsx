@@ -36,7 +36,7 @@ export const CreditOffers = component$(() => {
                             <tbody>
                                 <tbody>
                                     {offers.value.map((offer) => {
-                                        const status = new Date(offer.app_deadline) < new Date();
+                                        //const status = new Date(offer.app_deadline) < new Date();
                                         //const statusBadgeClass = status ? "badge bg-danger" : "badge bg-success";
                                         return (
                                             <>

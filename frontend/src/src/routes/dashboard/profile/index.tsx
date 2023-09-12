@@ -16,8 +16,8 @@ export const useLoadProfileDetails = routeLoader$(async () => {
 
 
 export const useChangePassword = server$(async (data) => {
-    const {  } = data;
-
+    const { id, currentPassword, password } = data;
+    console.log(id, currentPassword, password)
     try {
         // You can add logic to validate the current password before updating
         // const user = await prisma.registration.findUnique({ where: { id } });

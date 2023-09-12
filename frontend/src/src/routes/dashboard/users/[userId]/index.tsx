@@ -1,7 +1,7 @@
 import { component$ } from "@builder.io/qwik";
 import { routeLoader$ } from "@builder.io/qwik-city";
 
-export const useGetUser = routeLoader$(async ({  }) => {
+export const useGetUser = routeLoader$(async () => {
   // const userId = parseInt(params["userId"], 10);
   // const prisma = new PrismaClient();
   // const user = await prisma.user.findUnique({ where: { id: userId } });

@@ -1,5 +1,4 @@
 import { component$, useStore, $, } from "@builder.io/qwik";
-import { useChangePassword, useLoadProfileDetails } from "~/routes/dashboard/profile";
 
 // Generate the user ID prefix using pure JavaScript
 const currentDate = new Date();
@@ -32,7 +31,7 @@ export const ProfileCard = component$(() => {
 })
 
 export const ProfileOverview = component$(() => {
-    const details: any = useLoadProfileDetails()
+   // const details: any = useLoadProfileDetails()
     return (
         <>
             <div class="tab-pane fade show active profile-overview" id="profile-overview">
@@ -248,25 +247,25 @@ export const ProfileChangePassword = component$(() => {
         try {
             if (data.newPassword === data.confirmNewPassword) {
                 if (data.currentPassword && data.newPassword) {
-                    const response = await useChangePassword({
-                        id: 2,
-                        currentPassword: data.currentPassword,
-                        password: data.newPassword,
-                    });
-                    if (response.error) {
-                        data.response = "" // Set the response from the server
-                        data.error = `${response.error}`; // Clear any previous error message
-                        setTimeout(() => {
-                            data.response = "";
-                        }, 5000);
-                    } else {
-                        data.response = `${response.success}`; // Set the response from the server
-                        data.error = ""; // Clear any previous error message
-                        console.log(response);
-                        setTimeout(() => {
-                            data.response = "";
-                        }, 5000);
-                    }
+                    // const response = await useChangePassword({
+                    //     id: 2,
+                    //     currentPassword: data.currentPassword,
+                    //     password: data.newPassword,
+                    // });
+                    // if (response.error) {
+                    //     data.response = "" // Set the response from the server
+                    //     data.error = `${response.error}`; // Clear any previous error message
+                    //     setTimeout(() => {
+                    //         data.response = "";
+                    //     }, 5000);
+                    // } else {
+                    //     data.response = `${response.success}`; // Set the response from the server
+                    //     data.error = ""; // Clear any previous error message
+                    //     console.log(response);
+                    //     setTimeout(() => {
+                    //         data.response = "";
+                    //     }, 5000);
+                    // }
                 } else {
                     data.error = "Current and new passwords are required.";
                     data.response = "";
