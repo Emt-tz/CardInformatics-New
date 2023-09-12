@@ -21,6 +21,7 @@
     "serve": "node server/entry.express",
     "start": "vite --open --mode ssr",
     "qwik": "qwik"
+    
   },
   "devDependencies": {
     "@auth/core": "^0.7.1",
