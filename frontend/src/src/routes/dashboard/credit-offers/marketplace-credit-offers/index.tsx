@@ -1,6 +1,6 @@
-import { component$, $, useStore, useSignal } from "@builder.io/qwik";
-import { routeLoader$, useLocation } from "@builder.io/qwik-city";
-import { Prisma, PrismaClient } from "@prisma/client";
+import { component$} from "@builder.io/qwik";
+import {  useLocation } from "@builder.io/qwik-city";
+
 import { CreditOffers } from "~/components/cards/credit_offers";
 
 export default component$(() => {
