@@ -1,6 +1,5 @@
 import { component$ } from "@builder.io/qwik";
-import { routeLoader$, type DocumentHead } from "@builder.io/qwik-city";
-import { PrismaClient } from "@prisma/client";
+import { type DocumentHead } from "@builder.io/qwik-city";
 import { HomePage }  from "~/components/homepage/homepage";
 
 export default component$(() => {

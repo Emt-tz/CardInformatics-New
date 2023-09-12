@@ -1,10 +1,10 @@
 import { component$ } from "@builder.io/qwik";
 import { routeLoader$ } from "@builder.io/qwik-city";
-import { PrismaClient } from "@prisma/client";
 
 export const useGetUsers = routeLoader$(async () => {
-  const prisma = new PrismaClient();
-  const users = await prisma.registration.findMany();
+  // const prisma = new PrismaClient();
+  // const users = await prisma.registration.findMany();
+  const users = [{id:"",f_name:"", email:""}]
   return users;
 });
 

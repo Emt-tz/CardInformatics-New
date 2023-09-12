@@ -1,48 +1,47 @@
 import { component$ } from "@builder.io/qwik";
-import { routeAction$, zod$, z, server$, routeLoader$ } from "@builder.io/qwik-city";
-import { PrismaClient } from "@prisma/client";
-import { ProfileCard, ProfileChangePassword, ProfileEdit, ProfileOverview, ProfileSettings } from "~/components/profile/profile-card";
+import { server$, routeLoader$ } from "@builder.io/qwik-city";
+import { ProfileCard, ProfileChangePassword, ProfileOverview } from "~/components/profile/profile-card";
 
 export const useLoadProfileDetails = routeLoader$(async () => {
-    const prisma = new PrismaClient();
-    try {
-        const userDetails = await prisma.registration.findUnique({
-            where: { id: 2 },
-        });
-        return userDetails;
-    } catch (error) {
-        return error;
-    }
+    // const prisma = new PrismaClient();
+    // try {
+    //     const userDetails = await prisma.registration.findUnique({
+    //         where: { id: 2 },
+    //     });
+    //     return userDetails;
+    // } catch (error) {
+    //     return error;
+    // }
 });
 
 
 export const useChangePassword = server$(async (data) => {
-    const prisma = new PrismaClient();
-    const { id, currentPassword, password } = data;
+    // const prisma = new PrismaClient();
+    // const { id, currentPassword, password } = data;
 
-    try {
-        // You can add logic to validate the current password before updating
-        const user = await prisma.registration.findUnique({ where: { id } });
+    // try {
+    //     // You can add logic to validate the current password before updating
+    //     const user = await prisma.registration.findUnique({ where: { id } });
 
-        if (!user) {
-            return { error: "User not found" }
-        }
+    //     if (!user) {
+    //         return { error: "User not found" }
+    //     }
 
-        // Check if the current password matches
-        if (user.password !== currentPassword) {
-            return { error: "Current password is incorrect" }
-        }
+    //     // Check if the current password matches
+    //     if (user.password !== currentPassword) {
+    //         return { error: "Current password is incorrect" }
+    //     }
 
-        // Update the user's password
-        const updatedUser = await prisma.registration.update({
-            where: { id },
-            data: { password },
-        });
+    //     // Update the user's password
+    //     const updatedUser = await prisma.registration.update({
+    //         where: { id },
+    //         data: { password },
+    //     });
 
-        return { success: "Password updated successfully" };
-    } catch (error) {
-        return { error: "Failed to update password" }
-    }
+    //     return { success: "Password updated successfully" };
+    // } catch (error) {
+    //     return { error: "Failed to update password" }
+    // }
 });
 
 

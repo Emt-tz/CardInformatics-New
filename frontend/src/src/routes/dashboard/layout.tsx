@@ -1,9 +1,8 @@
 import { component$, Slot } from "@builder.io/qwik";
-import { routeLoader$, type RequestHandler, DocumentHead } from "@builder.io/qwik-city";
+import { type RequestHandler, DocumentHead } from "@builder.io/qwik-city";
 import { Footer } from "~/components/footer/footer";
 import { Header } from "~/components/header/header";
 import { SideBar } from "~/components/sidebar/side-bar";
-import { Prisma, PrismaClient } from "@prisma/client";
 
 export const onGet: RequestHandler = async ({ cacheControl }) => {
   // Control caching for this request for best performance and to reduce hosting costs:
@@ -16,11 +15,6 @@ export const onGet: RequestHandler = async ({ cacheControl }) => {
   });
 };
 
-export const useGetOffers = routeLoader$(async () => {
-  const prisma = new PrismaClient();
-  const offers = await prisma.credit_offer.findMany();
-  return offers;
-});
 
 export default component$(() => {
   return (

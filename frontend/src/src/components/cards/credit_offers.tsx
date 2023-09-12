@@ -1,11 +1,19 @@
-import { component$ } from "@builder.io/qwik";
-import { routeLoader$, useLocation } from "@builder.io/qwik-city";
-import { Prisma, PrismaClient } from "@prisma/client";
-import { useGetOffers } from "~/routes/dashboard/layout";
-
+import { component$, useStore } from "@builder.io/qwik";
 
 export const CreditOffers = component$(() => {
-    const offers = useGetOffers();
+    const offers = {
+      value:[
+        {
+          id: "",
+          institution_type:"",
+          credit_type:"",
+          credit_product: "",                                                 
+          credit_limit:"",
+          date:"",
+          app_deadline: ""
+        }
+      ]
+    };
     return (
         <>
             <div class="col-12">

@@ -1,28 +1,7 @@
 import { component$, useStore, $, useVisibleTask$, useSignal } from "@builder.io/qwik";
-import { Form, server$, useLocation } from "@builder.io/qwik-city";
-import { PrismaClient } from "@prisma/client";
+import { useLocation } from "@builder.io/qwik-city";
 import { Alert } from "~/components/profile/profile-card";
 import { useAuthSignin } from "~/routes/plugin@auth";
-
-export const useLoginUser = server$(async (data) => {
-    const prisma = new PrismaClient();
-    const { email, password } = data;
-    try {
-        const user = await prisma.registration.findUnique({ where: { email: email } });
-        if (!user) {
-            return { error: "User not found" };
-        }
-        // Check if the current password matches
-        if (user.password !== password) {
-            return { error: "Check credentials" };
-        }
-    } catch (error) {
-        return { error: "Failed to login" };
-    } finally {
-        await prisma.$disconnect(); // Disconnect from the database
-    }
-});
-
 
 export const Login = component$(() => {
     const loginAction = useAuthSignin();
