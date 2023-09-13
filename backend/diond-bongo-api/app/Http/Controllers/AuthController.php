@@ -78,9 +78,10 @@ class AuthController extends Controller
                                 foreach ($filteredProperties as $property) {
                                     if ($property === 'id') {
                                         $filteredUser["user_id"] = (string) $user->$property;
+                                    } elseif ($property === 'profile_pic') {
+                                        $filteredUser["profile_pic"] = asset('storage/profile_pictures/' . $user->$property);
                                     } else {
                                         $filteredUser[$property] = $user->$property;
-                                        $filteredUser["profile_pic"] = asset('storage/1avatar1.jpg');
                                     }
                                 }
 
@@ -183,7 +184,6 @@ class AuthController extends Controller
             $nida_no = $request->input('nida_no');
             $passport_no = $request->input('passport_no');
             $tin_no = $request->input('tin_no');
-            $l_name = $request->input('l_name');
             $f_name = $request->input('f_name');
             $l_name = $request->input('l_name');
             $birth_date = $request->input('birth_date');
