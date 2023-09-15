@@ -22,7 +22,7 @@ class UtilsHelper
         $mail->IsHTML(true);
         $mail->Subject = $subject;
         $mail->Body = $msg;
-        $mail->addEmbeddedImage(dirname(dirname(dirname(__FILE__))) . '/storage/app/public/1avatar1.jpg', 'logo');
+        $mail->addEmbeddedImage(dirname(dirname(dirname(__FILE__))) . '/storage/app/public/profile_pictures/1avatar1.jpg', 'logo');
         if (!$mail->Send()) {
             return 0;
         } else {
