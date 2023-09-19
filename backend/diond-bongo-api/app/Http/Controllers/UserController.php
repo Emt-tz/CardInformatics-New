@@ -354,9 +354,9 @@ Nenosiri lako la muda mfupi (OTP) kiambishi awali ni: $rec_prefix na msimbo wa k
 Dear $f_name,
 Your One-Time Password (OTP) reference prefix is: $rec_prefix and the reset code is: $verification_code. OTP expires within 3 mins.";
 
-                $this->utilsHelper->send_email($email, "CARD Informatics Notification (Account Verification)", $mailHtml);
-                $this->utilsHelper->message_send($p_number, $smsHtml);
-                // Session and response
+                // $this->utilsHelper->send_email($email, "CARD Informatics Notification (Account Verification)", $mailHtml);
+                // $this->utilsHelper->message_send($p_number, $smsHtml);
+                // // Session and response
                 Session::put('rec_prefix', $rec_prefix);
                 Session::put('user_id', $user->id);
                 Session::put('email', $user->email);
@@ -370,7 +370,7 @@ Your One-Time Password (OTP) reference prefix is: $rec_prefix and the reset code
                 $response = [
                     "success_notification" => [
                         'rec_prefix' => $rec_prefix,
-                        'user_id' => $user->id,
+                        'user_id' => "$user->id",
                         'email' => $user->email,
                         'nida_no' => $user->nida_no,
                         'name' => $user->f_name,
@@ -513,8 +513,8 @@ Dear $user->f_name,
 Your One-Time Password (OTP) reference prefix is: $rec_prefix and the reset code is : $verification_code. OTP expires within 3 mins.";
 
 
-                            $this->utilsHelper->send_email($email, "CARD Informatics Notification (Security Change)", $mailHtml);
-                            $this->utilsHelper->message_send($user->p_number, $smsHtml);
+                            // $this->utilsHelper->send_email($email, "CARD Informatics Notification (Security Change)", $mailHtml);
+                            // $this->utilsHelper->message_send($user->p_number, $smsHtml);
 
                             // Session and response
                             Session::put('rec_prefix', $rec_prefix);
@@ -597,5 +597,49 @@ Your One-Time Password (OTP) reference prefix is: $rec_prefix and the reset code
             ];
             return response()->json($response);
         }
+    }
+
+    public function handleGetUserByEmail(Request $request){
+        $email = $request -> email;
+        $user = Registration::where('email', $email)
+        ->first();
+        $filteredProperties = [
+            'id',
+            'nida_no',
+            'f_name',
+            'l_name',
+            'gender',
+            'marital_status',
+            'birth_date',
+            'citizenship',
+            'email',
+            'ward',
+            'street_no',
+            'street',
+            'district',
+            'region',
+            'p_number',
+            'marital_status',
+            'address',
+            'profile_pic',
+            'security_question',
+            'security_answer',
+        ];
+
+        $filteredUser = [];
+        foreach ($filteredProperties as $property) {
+            if ($property === 'id') {
+                $filteredUser["user_id"] = (string) $user->$property;
+            } elseif ($property === 'profile_pic') {
+                $filteredUser["profile_pic"] = asset('storage/profile_pictures/' . $user->$property);
+            } else {
+                $filteredUser[$property] = $user->$property;
+            }
+        }
+
+        $response = [
+            'success_notification' => $filteredUser,
+        ];
+        return response()->json($user);
     }
 }
