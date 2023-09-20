@@ -20,17 +20,43 @@ class LoanController extends Controller
     }
 
     public function handleLoanApplication(Request $request)
-    {
+{
+    $formData = $request->input('formData');
+    $uploadedFiles = $request->files->all();
+    return response()->json(['status'=> $uploadedFiles]);
 
-        $formData = $request->input('formData');
-        $uploadedFiles = $request->File('test');
-        return $this->response->sendSuccessResponse($uploadedFiles);
-        // Process the incoming data and files
-        $response = $this->processIncomingDataAndFiles($formData, $uploadedFiles);
+    // $fileContents = [];
 
-        // Return the response as JSON
-        return response()->json($response);
-    }
+    // foreach ($uploadedFiles as $fieldName => $file) {
+    //     // Check if the field is indeed a file
+    //     if ($file instanceof \Symfony\Component\HttpFoundation\File\UploadedFile) {
+    //         // Get the content of the file
+    //         $fileContent = file_get_contents($file->getPathname());
+    //         $fileContents[$fieldName] = $fileContent;
+    //     }
+    // }
+
+    // // Now, you have an array of file contents in $fileContents
+
+    // // Process the incoming data and files, e.g., call 
+    // //$this->processIncomingDataAndFiles($formData, $fileContents);
+
+    // // Return the response as JSON or perform other actions
+    // return response()->json(['file_contents' => $fileContents]);
+}
+
+
+    // public function handleLoanApplication(Request $request)
+    // {
+
+    //     $formData = $request->input('formData');
+    //     $uploadedFiles = $request->files;
+    //     // Process the incoming data and files
+    //     // $response = $this->processIncomingDataAndFiles($formData, $uploadedFiles);
+
+    //     // Return the response as JSON
+    //     return response()->json(file_get_contents($uploadedFiles));
+    // }
 
     private function processIncomingDataAndFiles($formData, $uploadedFiles)
     {
@@ -71,12 +97,12 @@ class LoanController extends Controller
             'R_p_number',
         ];
 
-        // foreach ($requiredFields as $field) {
-        //     if (!isset($formData[$field]) || $formData[$field] === null) {
-        //         return $this->response->sendFailureResponse("Error: The field '$field' is required.", 400);
-        //     }
-        // }
-        // $applicant = $this->processFormData($formData);
+        foreach ($requiredFields as $field) {
+            if (!isset($formData[$field]) || $formData[$field] === null) {
+                return $this->response->sendFailureResponse("Error: The field '$field' is required.", 400);
+            }
+        }
+        $applicant = $this->processFormData($formData);
         // Create the "applicant_files" directory if it doesn't exist
         $directory = 'public/applicant_files/' . now()->toDateString();
         Storage::makeDirectory($directory);
