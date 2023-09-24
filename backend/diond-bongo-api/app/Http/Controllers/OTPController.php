@@ -60,7 +60,7 @@ class OTPController extends Controller
                 }
             } else {
                 return response()->json([
-                    'fail_notification' => 'Failed, Invalid verification code',
+                    'fail_notification' => 'Failed, Invalid verification code' . $verification_code . $verification_id,
                 ]);
             }
         } catch (\Exception $e) {

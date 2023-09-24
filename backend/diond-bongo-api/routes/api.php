@@ -5,6 +5,7 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\OTPController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\LoanController;
+use App\Http\Controllers\CreditOffersController;
 
 //auth
 Route::post('/login', [AuthController::class, 'handleLogin']);
@@ -22,3 +23,5 @@ Route::post('/loan/apply',[LoanController::class, 'handleLoanApplication']);
 Route::get('/loan/form', [LoanController::class, 'handleLoadLoanForm']);
 Route::get('/loan/{email}',[LoanController::class, 'handleGetUserLoans']);
 Route::get('/loan/{email}?loan_status=Approved',[LoanController::class, 'handleGetUserLoans']);
+// credit offers
+Route::get('/credit/offers', [CreditOffersController::class, 'handleLoadCreditOffers']);

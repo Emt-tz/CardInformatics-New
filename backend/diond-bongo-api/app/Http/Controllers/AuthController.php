@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\DB;
 use App\Helpers\UtilsHelper;
 use Illuminate\Support\Facades\Validator;
 use App\Http\Controllers\Controller;
+use DateTime;
 
 class AuthController extends Controller
 {
@@ -158,12 +159,12 @@ class AuthController extends Controller
             'nida_no' => 'required|unique:registration,nida_no|min:20',
             'passport_no' => 'required',
             'tin_no' => 'required',
-            'l_name' => 'required',
+            'm_name' => 'required',
             'f_name' => 'required',
             'l_name' => 'required',
             'birth_date' => 'required|date',
             'gender' => 'required',
-            'marital_status' => 'required',
+            'marital status' => 'required',
             'p_number' => 'required|unique:registration,p_number|min:11',
             'citizenship' => 'required',
             'email' => 'required|email|unique:registration,email',
@@ -234,8 +235,8 @@ Nenosiri lako la muda mfupi (OTP) imetumwa kwa barua pepe yako ($email), OTP hii
 Dear $f_name,
 Your One-Time Password (OTP) has been sent to your registered email ($email), OTP expires within 5 mins.   ";
 
-            $this->utilsHelper->message_send($p_number, $smsHtml);
-            $this->utilsHelper->send_email($email, "CARD Informatics Notification (Account Verification)", $mailHtml);
+            // $this->utilsHelper->message_send($p_number, $smsHtml);
+            // $this->utilsHelper->send_email($email, "CARD Informatics Notification (Account Verification)", $mailHtml);
             // Insert user data into the database
             $user = new Registration();
             $user->nida_no = $nida_no;
@@ -269,8 +270,7 @@ Your One-Time Password (OTP) has been sent to your registered email ($email), OT
         } catch (\Exception $e) {
             // Handle any exceptions (e.g., database errors)
             return response()->json([
-                'fail_notification' => 'Registration failed. Please try again later.',
-                'error_message' => $e->getMessage(),
+                'fail_notification' => 'Registration failed. Please try again later.' . $e->getMessage(),
             ], 500);
         }
     }
@@ -280,25 +280,24 @@ Your One-Time Password (OTP) has been sent to your registered email ($email), OT
         // Validate the incoming registration data
         $validator = Validator::make($request->all(), [
             'nida_no' => 'required|unique:registration,nida_no|min:20',
+            'm_name' => 'required',
             'f_name' => 'required',
             'l_name' => 'required',
-            'birth_date' => 'required|date',
+            'birth_date' => 'required',
             'gender' => 'required',
             'marital_status' => 'required',
-            'p_number' => 'required|unique:registration,p_number',
+            'p_number' => 'required|unique:registration,p_number|min:11',
             'citizenship' => 'required',
             'email' => 'required|email|unique:registration,email',
             'security_question' => 'required',
             'security_answer' => 'required',
             'password' => 'required|min:6',
         ]);
-
         if ($validator->fails()) {
             return response()->json([
                 'fail_notification' => 'Validation failed: ' . implode(', ', $validator->errors()->all()),
             ], 400);
         }
-
         // Registration logic (database insert, email sending, etc.)
         try {
             $nida_no = $request->input('nida_no');
@@ -313,7 +312,6 @@ Your One-Time Password (OTP) has been sent to your registered email ($email), OT
             $security_question = $request->input('security_question');
             $security_answer = $request->input('security_answer');
             $password = md5($request->input('password'));
-
             // Generate OTP and send it via email
             $rec_prefix = $this->utilsHelper->recovery_prefix(4);
             $verification_id = rand(111111, 999999);
@@ -354,15 +352,14 @@ Nenosiri lako la muda mfupi (OTP) imetumwa kwa barua pepe yako ($email), OTP hii
 Dear $f_name,
 Your One-Time Password (OTP) has been sent to your registered email ($email), OTP expires within 5 mins.   ";
 
-            $this->utilsHelper->message_send($p_number, $smsHtml);
-            $this->utilsHelper->send_email($email, "CARD Informatics Notification (Account Locked)", $mailHtml);
+            // $this->utilsHelper->message_send($p_number, $smsHtml);
+            // $this->utilsHelper->send_email($email, "CARD Informatics Notification (Account Locked)", $mailHtml);
             // Insert user data into the database
             $user = new Registration();
             $user->nida_no = $nida_no;
             $user->f_name = $f_name;
             $user->l_name = $l_name;
-            $temp_birth_date = date_create($birth_date);
-            $user->birth_date = date_format($temp_birth_date, 'd/m/Y');
+            $user->birth_date = DateTime::createFromFormat('d/m/Y', $birth_date);
             $user->gender = $gender;
             $user->marital_status = $marital_status;
             $user->p_number = $p_number;
@@ -376,7 +373,7 @@ Your One-Time Password (OTP) has been sent to your registered email ($email), OT
             // Return a success response
             return response()->json([
                 'success_notification' => [
-                    'Verification_send' => $verification_id,
+                    'Verification_send' => (int) $verification_id,
                     'rec_prefix' => $rec_prefix,
                     'email' => $email,
                     'start' => time(),
@@ -387,8 +384,7 @@ Your One-Time Password (OTP) has been sent to your registered email ($email), OT
         } catch (\Exception $e) {
             // Handle any exceptions (e.g., database errors)
             return response()->json([
-                'fail_notification' => 'Registration failed. Please try again later.',
-                'error_message' => $e->getMessage(),
+                'fail_notification' => 'Registration failed. Please try again later.' . $e->getMessage(),
             ], 500);
         }
     }
