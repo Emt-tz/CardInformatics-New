@@ -2,64 +2,99 @@
 
 namespace App\Http\Controllers;
 
+use App\Helpers\ApiResponse;
+use App\Helpers\UtilsHelper;
 use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
 use App\Models\Applicant;
 use App\Models\ApplicantDocument;
-use App\Helpers\ApiResponse;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use \Illuminate\Http\UploadedFile;
 
 class LoanController extends Controller
 {
     public $response;
+    public $utilsHelper;
 
     public function __construct()
     {
         $this->response = new ApiResponse();
+        $this->utilsHelper = new UtilsHelper();
+    }
+
+    public function handleLoadLoanForm()
+    {
+        // Get the path to the JSON file in the storage directory
+        $jsonFilePath = storage_path('configs/loanForm.json');
+        // Check if the JSON file exists
+        if (file_exists($jsonFilePath)) {
+            // Read the JSON content
+            $jsonData = file_get_contents($jsonFilePath);
+            // Return the JSON data as a response
+            return response()->json(json_decode($jsonData));
+
+        } else {
+            // JSON file not found, return an error response or handle it as needed
+            return $this->response->sendFailureResponse("Loan Form file not found");
+        }
+    }
+
+    public function handleGetUserLoans(Request $request, $user_id)
+    {
+        // Get the loan_status query parameter
+        $loanStatus = $request->query('loan_status');
+
+        // Initialize the query builder
+        $query = Applicant::where('user_id', $user_id);
+
+        // Conditionally add the loan_status filter
+        if ($loanStatus) {
+            $query->where('loan_status', $loanStatus);
+        }
+
+        // Execute the query
+        $loans = $query->get();
+
+        // Check if any loans were found
+        if ($loans->isEmpty()) {
+            $message = $loanStatus ? 'You haven\'t been approved for any loans yet' : 'You haven\'t applied for any loans yet';
+            return $this->response->sendFailureResponse($message);
+        }
+
+        // Construct a JSON response with the loan data
+        $loanData = [];
+        foreach ($loans as $loan) {
+            $loanData[] = [
+                'application_code' => $loan->application_code,
+                'application_date' => $loan->application_date,
+                'loan_requested' => $loan->loan_requested,
+                'purpose_of_loan' => $loan->purpose_of_loan,
+                'currency' => $loan->currency,
+                'amount_requested' => $loan->amount_requested,
+                'loan_status' => $loan->loan_status,
+                'details' => $loan->details,
+            ];
+        }
+
+        return $this->response->sendSuccessResponse($loanData);
     }
 
     public function handleLoanApplication(Request $request)
-{
-    $formData = $request->input('formData');
-    $uploadedFiles = $request->files->all();
-    return response()->json(['status'=> $uploadedFiles]);
+    {
 
-    // $fileContents = [];
+        $formData = $request->input('formData');
+        $uploadedFiles = $request->File('files');
+        $this->utilsHelper->log($request->all());
+        // Process the incoming data and files
+        $response = $this->processIncomingDataAndFiles($formData, $uploadedFiles);
 
-    // foreach ($uploadedFiles as $fieldName => $file) {
-    //     // Check if the field is indeed a file
-    //     if ($file instanceof \Symfony\Component\HttpFoundation\File\UploadedFile) {
-    //         // Get the content of the file
-    //         $fileContent = file_get_contents($file->getPathname());
-    //         $fileContents[$fieldName] = $fileContent;
-    //     }
-    // }
-
-    // // Now, you have an array of file contents in $fileContents
-
-    // // Process the incoming data and files, e.g., call 
-    // //$this->processIncomingDataAndFiles($formData, $fileContents);
-
-    // // Return the response as JSON or perform other actions
-    // return response()->json(['file_contents' => $fileContents]);
-}
-
-
-    // public function handleLoanApplication(Request $request)
-    // {
-
-    //     $formData = $request->input('formData');
-    //     $uploadedFiles = $request->files;
-    //     // Process the incoming data and files
-    //     // $response = $this->processIncomingDataAndFiles($formData, $uploadedFiles);
-
-    //     // Return the response as JSON
-    //     return response()->json(file_get_contents($uploadedFiles));
-    // }
+        // Return the response as JSON
+        return $response;
+    }
 
     private function processIncomingDataAndFiles($formData, $uploadedFiles)
     {
+        //return $this->response->sendFailureResponse($formData);
         // Validate required fields
         $requiredFields = [
             'user_id',
@@ -79,7 +114,7 @@ class LoanController extends Controller
             'previous_employed_from',
             'previous_employed_to',
             'annual_salary',
-            'supplimentary_income',
+            //'supplimentary_income',
             's_employed_income',
             'other_income',
             'income_source',
@@ -97,11 +132,26 @@ class LoanController extends Controller
             'R_p_number',
         ];
 
+        $jsonData = json_decode($formData, true);
+        // Initialize an array to store missing or null fields
+        $missingFields = [];
+
+        // Loop through the required fields
         foreach ($requiredFields as $field) {
-            if (!isset($formData[$field]) || $formData[$field] === null) {
-                return $this->response->sendFailureResponse("Error: The field '$field' is required.", 400);
+            // Check if the field exists and is not null
+            if (!isset($jsonData[$field]) || $jsonData[$field] === null) {
+                $missingFields[] = $field;
             }
         }
+
+        // Check if any required fields are missing or null
+        if (!empty($missingFields)) {
+            // Construct an error message listing the missing fields
+            $errorMessage = "Error: The following fields are required or null: " . implode(', ', $missingFields);
+
+            return $this->response->sendFailureResponse($errorMessage, 400);
+        }
+
         $applicant = $this->processFormData($formData);
         // Create the "applicant_files" directory if it doesn't exist
         $directory = 'public/applicant_files/' . now()->toDateString();
@@ -126,7 +176,7 @@ class LoanController extends Controller
                         // Store the file in the storage directory
                         $file->storeAs($directory, $fileName);
                         // Insert file details into the applicant_documents table
-                        //$this->insertApplicantDocument($applicant->id, $fileName, $directory . '/' . $fileName);
+                        $this->insertApplicantDocument($applicant->id, $fileName, $directory . '/' . $fileName);
                     }
                 } catch (\Exception $e) {
                     $this->response->sendFailureResponse($e->getMessage());
@@ -135,20 +185,19 @@ class LoanController extends Controller
             }
         }
 
-        // Check if all file uploads were successful before processing form data
-        // if ($fileUploadSuccess) {
-        //     $applicant = $this->processFormData($formData);
-        //     return $this->response->sendSuccessResponse('Form data and files uploaded successfully.');
-        // } else {
-        //     return $this->response; // This response will contain the failure messages.
-        // }
+        return $this->response->sendSuccessResponse('Form data and files uploaded successfully.');
     }
-
 
     private function processFormData($formData)
     {
-        $applicant = Applicant::create($formData);
-        return $applicant;
+        try {
+            $applicant = Applicant::create($formData);
+            return $applicant;
+        } catch (\Exception $e) {
+            $error = $e->getMessage();
+            \Log::error($error);
+            return null;
+        }
     }
 
     private function insertApplicantDocument($applicantId, $fileName, $filePath)

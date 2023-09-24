@@ -39,10 +39,9 @@ class AuthController extends Controller
             $password = $json_data->password;
 
             // Process data and validate user credentials
-            $user = Registration::join('role', 'role.role_id', '=', 'registration.role')
-                ->where('email', $username)
-                ->orWhere('p_number', $username)
-                ->first();
+            $user = Registration::where('email', $username)
+            ->orWhere('p_number', $username)
+            ->first();
 
             if ($user) {
                 if ($user->status == 0) {
@@ -130,9 +129,8 @@ class AuthController extends Controller
                     ], 400);
                 }
             } else {
-                // Handle invalid account
                 return response()->json([
-                    'fail_notification' => 'Invalid Account',
+                    'fail_notification' => 'Invalid Account ' . $user,
                 ], 400);
             }
         }

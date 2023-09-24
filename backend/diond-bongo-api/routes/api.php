@@ -19,3 +19,6 @@ Route::post('/user/update_password', [UserController::class, 'handleUpdatePasswo
 Route::post('/user/update_security_question', [UserController::class, 'handleUpdateSecurityQuestion']);
 // loan
 Route::post('/loan/apply',[LoanController::class, 'handleLoanApplication']);
+Route::get('/loan/form', [LoanController::class, 'handleLoadLoanForm']);
+Route::get('/loan/{email}',[LoanController::class, 'handleGetUserLoans']);
+Route::get('/loan/{email}?loan_status=Approved',[LoanController::class, 'handleGetUserLoans']);

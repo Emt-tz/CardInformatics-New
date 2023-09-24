@@ -1,0 +1,907 @@
+{
+    "steps": [
+        {
+            "step1": {
+                "next": "step2",
+                "title": {
+                    "en": "english",
+                    "sw": "swahili"
+                },
+                "fields": [
+                    {
+                        "key": "loan_facility_requested",
+                        "label": {
+                            "en": "Loan Facility Requested",
+                            "sw": "Aina ya mkopo unaoomba"
+                        },
+                        "hint": {
+                            "en": "Select Loan Facility Requested",
+                            "sw": "Chagua Aina ya mkopo unaoomba"
+                        },
+                        "type": "dropdown",
+                        "isRequired": true,
+                        "dropdownItems": [
+                            {
+                                "value": "Mobile Money / Digital Loans"
+                            },
+                            {
+                                "value": "Credit Card Revolving Loan"
+                            },
+                            {
+                                "value": "Mobile Money / Digital Loans"
+                            },
+                            {
+                                "value": "Credit Card Revolving Loan"
+                            },
+                            {
+                                "value": "Mortgage Loan"
+                            },
+                            {
+                                "value": "Motorized Vehicle Loan"
+                            },
+                            {
+                                "value": "Personal Loan"
+                            },
+                            {
+                                "value": "Payday Loan"
+                            },
+                            {
+                                "value": "Education Loan"
+                            },
+                            {
+                                "value": "Secure / Collateralized Loan"
+                            },
+                            {
+                                "value": "Business Loans"
+                            },
+                            {
+                                "value": "Account Overdraft"
+                            }
+                        ]
+                    },
+                    {
+                        "key": "income_currency",
+                        "label": {
+                            "en": "Your Income Currency",
+                            "sw": "Aina ya mkopo unaoomba"
+                        },
+                        "hint": {
+                            "en": "Select Your Income Currency",
+                            "sw": "Chagua aina ya sarafu unayotumia"
+                        },
+                        "type": "dropdown",
+                        "isRequired": true,
+                        "dropdownItems": [
+                            {
+                                "value": "TZS"
+                            },
+                            {
+                                "value": "KES"
+                            },
+                            {
+                                "value": "UGX"
+                            },
+                            {
+                                "value": "RWF"
+                            },
+                            {
+                                "value": "BIF"
+                            },
+                            {
+                                "value": "SSP"
+                            },
+                            {
+                                "value": "CDF"
+                            },
+                            {
+                                "value": "USD"
+                            },
+                            {
+                                "value": "EUR"
+                            },
+                            {
+                                "value": "ZAR"
+                            }
+                        ]
+                    },
+                    {
+                        "key": "loan_request_value",
+                        "label": {
+                            "en": "Value of Loan Requested",
+                            "sw": "Thamani ya Mkopo Unaoomba"
+                        },
+                        "hint": {
+                            "en": "Value of Loan Requested",
+                            "sw": "Thamani ya Mkopo Unaoomba"
+                        },
+                        "type": "number",
+                        "isRequired": true,
+                        "regex": {
+                            "value": "^(0|[1-9]\\d{0,6}(\\.\\d{1,2})?|1\\d{0,7}(\\.\\d{1,2})?|20{0,6}(\\.0{1,2})?)$",
+                            "err": {
+                                "en": "Amount is not valid",
+                                "sw": "Kiwango sio sahihi"
+                            }
+                        }
+                    },
+                    {
+                        "key": "loan_purpose",
+                        "label": {
+                            "en": "Purpose for this loan",
+                            "sw": "Kusudi la Mkopo"
+                        },
+                        "hint": {
+                            "en": "Short and clear answer",
+                            "sw": "Short and clear answer"
+                        },
+                        "type": "text",
+                        "isRequired": true,
+                        "min-length": 10,
+                        "max-length": 200,
+                        "regex": {
+                            "value": "^[\\s\\S]{10,200}$",
+                            "err": {
+                                "en": "Input should be between 10 and 200 characters",
+                                "sw": "Ingiza kati ya herufi 10 na 200"
+                            }
+                        }
+                    },
+                    {
+                        "key": "any_existing_loans",
+                        "label": {
+                            "en": "Any Existing Loans",
+                            "sw": "Una Mikopo Mingine Yeyote ?"
+                        },
+                        "type": "radio",
+                        "isRequired": true,
+                        "options": [
+                            {
+                                "value": "Yes"
+                            },
+                            {
+                                "value": "No"
+                            }
+                        ]
+                    },
+                    {
+                        "key": "lending_institutions",
+                        "label": {
+                            "en": "List all Lending Institutions",
+                            "sw": "Orodhesha Taasisi Zote Zilizokupa Mkopo"
+                        },
+                        "hint": {
+                            "en": "List all Lending Institutions",
+                            "sw": "Orodhesha Taasisi Zote Zilizokupa Mkopo"
+                        },
+                        "type": "text",
+                        "isRequired": false,
+                        "regex": {
+                            "value": "^[\\s\\S]{10,200}$",
+                            "err": {
+                                "en": "Input should be between 10 and 200 characters",
+                                "sw": "Ingiza kati ya herufi 10 na 200"
+                            }
+                        },
+                        "dependent-on": "any_existing_loans",
+                        "dependency_values": [
+                            "Yes"
+                        ],
+                        "dependent_value_required": true
+                    },
+                    {
+                        "key": "existing_loans",
+                        "label": {
+                            "en": "Value of all Existing Loans",
+                            "sw": "Thamani ya Mikopo Yote Iliyopo"
+                        },
+                        "hint": {
+                            "en": "Ex 2000000",
+                            "sw": "Mf 2000000"
+                        },
+                        "type": "number",
+                        "isRequired": false,
+                        "regex": {
+                            "value": "^[\\s\\S]{10,200}$",
+                            "err": {
+                                "en": "Input should be between 10 and 200 characters",
+                                "sw": "Ingiza kati ya herufi 10 na 200"
+                            }
+                        },
+                        "dependent-on": "any_existing_loans",
+                        "dependency_values": [
+                            "Yes"
+                        ],
+                        "dependent_value_required": true
+                    }
+                ]
+            }
+        },
+        {
+            "step2": {
+                "next": "step3",
+                "title": {
+                    "en": "Step 2",
+                    "sw": "Step 2"
+                },
+                "fields": [
+                    {
+                        "key": "employment_status",
+                        "label": {
+                            "en": "Are You Employed?",
+                            "sw": "Je, Umeajiriwa?"
+                        },
+                        "type": "radio",
+                        "isRequired": true,
+                        "options": [
+                            {
+                                "value": "Yes"
+                            },
+                            {
+                                "value": "No"
+                            }
+                        ]
+                    },
+                    {
+                        "key": "current_employer",
+                        "label": {
+                            "en": "Current Employer",
+                            "sw": "Mwajiri wa Sasa"
+                        },
+                        "hint": {
+                            "en": "If no skip this step",
+                            "sw": "If no skip this step"
+                        },
+                        "type": "text",
+                        "isRequired": false,
+                        "regex": {
+                            "value": "^[\\s\\S]{0,200}$",
+                            "err": {
+                                "en": "Value must be between 0 and 200 characters.",
+                                "sw": "Thamani inapaswa kuwa kati ya herufi 0 na 200."
+                            }
+                        },
+                        "dependent-on": "employment_status",
+                        "dependency_values": [
+                            "Yes"
+                        ],
+                        "dependent_value_required": true
+                    },
+                    {
+                        "key": "current_designation",
+                        "label": {
+                            "en": "Current Designation",
+                            "sw": "Cheo Chako"
+                        },
+                        "hint": {
+                            "en": "If no skip this step",
+                            "sw": "Kama hakuna, ruka hatua hii"
+                        },
+                        "type": "text",
+                        "isRequired": false,
+                        "regex": {
+                            "value": "^[\\s\\S]{0,100}$",
+                            "err": {
+                                "en": "Value must be between 0 and 100 characters.",
+                                "sw": "Thamani inapaswa kuwa kati ya herufi 0 na 100."
+                            }
+                        },
+                        "dependent-on": "employment_status",
+                        "dependency_values": [
+                            "Yes"
+                        ],
+                        "dependent_value_required": true
+                    },
+                    {
+                        "key": "from_date",
+                        "label": {
+                            "en": "From",
+                            "sw": "Kutoka"
+                        },
+                        "hint": {
+                            "en": "Enter the start date (mm/yyyy)",
+                            "sw": "Ingiza tarehe ya kuanza (mm/yyyy)"
+                        },
+                        "type": "text",
+                        "isRequired": false,
+                        "regex": {
+                            "value": "^(0[1-9]|1[0-2])/\\d{4}$",
+                            "err": {
+                                "en": "Please enter a valid date in mm/yyyy format.",
+                                "sw": "Tafadhali ingiza tarehe sahihi katika muundo wa mm/yyyy."
+                            }
+                        },
+                        "dependent-on": "employment_status",
+                        "dependency_values": [
+                            "Yes"
+                        ],
+                        "dependent_value_required": true
+                    },
+                    {
+                        "key": "to_date",
+                        "label": {
+                            "en": "To",
+                            "sw": "Mpaka"
+                        },
+                        "hint": {
+                            "en": "Enter the end date (mm/yyyy)",
+                            "sw": "Ingiza tarehe ya mwisho (mm/yyyy)"
+                        },
+                        "type": "text",
+                        "isRequired": false,
+                        "regex": {
+                            "value": "^(0[1-9]|1[0-2])/\\d{4}$",
+                            "err": {
+                                "en": "Please enter a valid date in mm/yyyy format.",
+                                "sw": "Tafadhali ingiza tarehe sahihi katika muundo wa mm/yyyy."
+                            }
+                        },
+                        "dependent-on": "employment_status",
+                        "dependency_values": [
+                            "Yes"
+                        ],
+                        "dependent_value_required": true
+                    },
+                    {
+                        "key": "any_previous_employer",
+                        "label": {
+                            "en": "Any Previous Employer?",
+                            "sw": "Mwajiri Yeyote wa Awali?"
+                        },
+                        "type": "radio",
+                        "isRequired": true,
+                        "options": [
+                            {
+                                "value": "Yes"
+                            },
+                            {
+                                "value": "No"
+                            }
+                        ]
+                    },
+                    {
+                        "key": "previous_employer",
+                        "label": {
+                            "en": "Previous Employer",
+                            "sw": "Mwajiri wa Awali"
+                        },
+                        "hint": {
+                            "en": "Enter the name of the previous employer",
+                            "sw": "Ingiza jina la mwajiri wa awali"
+                        },
+                        "type": "text",
+                        "isRequired": false,
+                        "dependent-on": "any_previous_employer",
+                        "dependency_values": [
+                            "yes"
+                        ],
+                        "dependent_value_required": true
+                    },
+                    {
+                        "key": "previous_designation",
+                        "label": {
+                            "en": "Previous Designation",
+                            "sw": "Cheo Chako cha Awali"
+                        },
+                        "hint": {
+                            "en": "Enter your previous designation",
+                            "sw": "Ingiza cheo chako cha awali"
+                        },
+                        "type": "text",
+                        "isRequired": false,
+                        "dependent-on": "any_previous_employer",
+                        "dependency_values": [
+                            "yes"
+                        ],
+                        "dependent_value_required": true
+                    },
+                    {
+                        "key": "previous_employment_from",
+                        "label": {
+                            "en": "From",
+                            "sw": "Kutoka"
+                        },
+                        "hint": {
+                            "en": "Enter the start date (mm/yyyy)",
+                            "sw": "Ingiza tarehe ya kuanza (mm/yyyy)"
+                        },
+                        "type": "text",
+                        "isRequired": false,
+                        "regex": {
+                            "value": "^(0[1-9]|1[0-2])/\\d{4}$",
+                            "err": {
+                                "en": "Please enter a valid date in mm/yyyy format.",
+                                "sw": "Tafadhali ingiza tarehe sahihi katika muundo wa mm/yyyy."
+                            }
+                        },
+                        "dependent-on": "any_previous_employer",
+                        "dependency_values": [
+                            "yes"
+                        ],
+                        "dependent_value_required": true
+                    }
+                ]
+            }
+        },
+        {
+            "step3": {
+                "next": "step4",
+                "title": {
+                    "en": "Employement Details",
+                    "sw": "Employment Details"
+                },
+                "fields": [
+                    {
+                        "key": "legal_business_name",
+                        "label": {
+                            "en": "Legal Name of your Business",
+                            "sw": "Jina la Kisheria la Biashara Yako"
+                        },
+                        "hint": {
+                            "en": "Enter the legal name of your business",
+                            "sw": "Weka jina la kisheria la biashara yako"
+                        },
+                        "type": "text",
+                        "isRequired": true
+                    },
+                    {
+                        "key": "business_license_name",
+                        "label": {
+                            "en": "Name on Business License",
+                            "sw": "Jina kwenye Leseni ya Biashara"
+                        },
+                        "hint": {
+                            "en": "Enter the name on your business license",
+                            "sw": "Weka jina kwenye leseni yako ya biashara"
+                        },
+                        "type": "text",
+                        "isRequired": true
+                    },
+                    {
+                        "key": "business_location",
+                        "label": {
+                            "en": "Location of your Business",
+                            "sw": "Eneo la Biashara Yako"
+                        },
+                        "hint": {
+                            "en": "Enter the location of your business",
+                            "sw": "Weka eneo la biashara yako"
+                        },
+                        "type": "text",
+                        "isRequired": true
+                    },
+                    {
+                        "key": "street_name_district",
+                        "label": {
+                            "en": "Street Name & District",
+                            "sw": "Jina la Mtaa na Wilaya"
+                        },
+                        "hint": {
+                            "en": "Enter the street name and district",
+                            "sw": "Weka jina la mtaa na wilaya"
+                        },
+                        "type": "text",
+                        "isRequired": true
+                    },
+                    {
+                        "key": "business_type",
+                        "label": {
+                            "en": "Business Type",
+                            "sw": "Aina ya Biashara"
+                        },
+                        "hint": {
+                            "en": "Enter the type of your business",
+                            "sw": "Weka aina ya biashara yako"
+                        },
+                        "type": "text",
+                        "isRequired": true
+                    },
+                    {
+                        "key": "attach_business_license_or_letter",
+                        "label": {
+                            "en": "Please attach a copy of your Business License OR your Letter of Employment",
+                            "sw": "Tafadhali ambatisha nakala ya Leseni ya Biashara yako AU Barua ya Ajira"
+                        },
+                        "type": "file",
+                        "isRequired": true
+                    },
+                    {
+                        "key": "collateral_type",
+                        "label": {
+                            "en": "What Collateral would you like to attach?",
+                            "sw": "Ungependa kuambatanisha Dhamana gani?"
+                        },
+                        "regex": {
+                            "value": "",
+                            "err": {
+                                "en": "This Field is Required",
+                                "sw": "Uga hili linahitajika"
+                            }
+                        },
+                        "type": "text",
+                        "isRequired": true
+                    },
+                    {
+                        "key": "collateral_value",
+                        "label": {
+                            "en": "Tell us the Value of your Collateral",
+                            "sw": "Tuambie Thamani ya Dhamana yako"
+                        },
+                        "hint": {
+                            "en": "Enter the value of your collateral",
+                            "sw": "Weka thamani ya dhamana yako"
+                        },
+                        "type": "text",
+                        "isRequired": true,
+                        "regex": {
+                            "value": "",
+                            "err": {
+                                "en": "This Field is Required",
+                                "sw": "Uga hili linahitajika"
+                            }
+                        }
+                    },
+                    {
+                        "key": "collateral_documents",
+                        "label": {
+                            "en": "Government-Issued Collateral Documents that are Required",
+                            "sw": "Nyaraka za Dhamana Zinazotolewa na Serikali Ambazo Zinahitajika"
+                        },
+                        "type": "radio",
+                        "options": [
+                            {
+                                "value": "land_title_deed"
+                            },
+                            {
+                                "value": "motor_vehicle_registration_card"
+                            },
+                            {
+                                "value": "other_relevant_documents"
+                            }
+                        ],
+                        "isRequired": true
+                    },
+                    {
+                        "key": "attach_collateral_document",
+                        "label": {
+                            "en": "Please attach one of the above-listed Government-Issued Collateral Document",
+                            "sw": "Tafadhali ambatisha moja ya Waraka wa Dhamana uliotolewa na Serikali hapo juu"
+                        },
+                        "type": "file",
+                        "isRequired": true
+                    }
+                ]
+            }
+        },
+        {
+            "step4": {
+                "next": "step5",
+                "title": {
+                    "en": "Referee",
+                    "sw": "Mshauri"
+                },
+                "fields": [
+                    {
+                        "key": "referee_nida_number",
+                        "label": {
+                            "en": "Referee's NIDA Number",
+                            "sw": "Nambari ya NIDA ya Mshauri"
+                        },
+                        "hint": {
+                            "en": "Format: YYYYMMDDXXXXXXXXXXXX (e.g., 19900101111111000120)",
+                            "sw": "Muundo: YYYYMMDDXXXXXXXXXXXX (kwa mfano, 19900101111111000120)"
+                        },
+                        "type": "text",
+                        "isRequired": true,
+                        "min-length": 10,
+                        "max-length": 200,
+                        "regex": {
+                            "value": "^(19|20)\\d{2}(0[1-9]|1[0-2])(0[1-9]|[12]\\d|3[01])\\d{12}$",
+                            "err": {
+                                "en": "Invalid NIDA number",
+                                "sw": "Nambari ya NIDA batili"
+                            }
+                        }
+                    },
+                    {
+                        "key": "referee_full_name",
+                        "label": {
+                            "en": "Referee's Full Name",
+                            "sw": "Jina kamili la Mshauri"
+                        },
+                        "type": "text",
+                        "isRequired": true
+                    },
+                    {
+                        "key": "referee_date_of_birth",
+                        "label": {
+                            "en": "Referee's Date of Birth",
+                            "sw": "Tarehe ya Kuzaliwa Mshauri"
+                        },
+                        "type": "text",
+                        "isRequired": true,
+                        "regex": {
+                            "value": "^(0[1-9]|1[0-2])/(0[1-9]|[12]\\d|3[01])/\\d{4}$",
+                            "err": {
+                                "en": "Invalid Date of Birth",
+                                "sw": "Tarehe ya Kuzaliwa batili"
+                            }
+                        }
+                    },
+                    {
+                        "key": "referee_marital_status",
+                        "label": {
+                            "en": "Referee's Martial Status",
+                            "sw": "Hali ya Ndoa ya Mshauri"
+                        },
+                        "type": "radio",
+                        "isRequired": true,
+                        "options": [
+                            {
+                                "value": "Single"
+                            },
+                            {
+                                "value": "Married"
+                            },
+                            {
+                                "value": "Widowed"
+                            },
+                            {
+                                "value": "Divorced"
+                            }
+                        ]
+                    },
+                    {
+                        "key": "referee_profession",
+                        "label": {
+                            "en": "Referee's Profession",
+                            "sw": "Taaluma ya Mshauri"
+                        },
+                        "type": "text",
+                        "isRequired": true
+                    },
+                    {
+                        "key": "referee_email",
+                        "label": {
+                            "en": "Referee's Email",
+                            "sw": "Barua Pepe ya Mshauri"
+                        },
+                        "type": "text",
+                        "isRequired": true,
+                        "regex": {
+                            "value": "^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,}$",
+                            "err": {
+                                "en": "Invalid Email Address",
+                                "sw": "Anwani ya Barua Pepe batili"
+                            }
+                        }
+                    },
+                    {
+                        "key": "referee_mobile_number",
+                        "label": {
+                            "en": "Referee's Mobile Number",
+                            "sw": "Nambari ya simu"
+                        },
+                        "type": "text",
+                        "isRequired": true,
+                        "regex": {
+                            "value": "^255[0-9]{9}$",
+                            "err": {
+                                "en": "Invalid Mobile Number",
+                                "sw": "Nambari ya Simu batili"
+                            }
+                        }
+                    }
+                ]
+            }
+        },
+        {
+            "step5": {
+                "next": "step6",
+                "title": {
+                    "en": "Referee",
+                    "sw": "Mshauri"
+                },
+                "fields": [
+                    {
+                        "key": "monthly_salary",
+                        "label": {
+                            "en": "What salary do you get every MONTH from your employer?",
+                            "sw": "Je, Unapata mshahara gani kila MWEZI kutoka kwa mwajiri wako?"
+                        },
+                        "type": "text",
+                        "regex": {
+                            "value": "^[0-9]+$",
+                            "err": {
+                                "en": "Invalid input. Please enter a valid amount.",
+                                "sw": "Ingizo halali halikupatikana. Tafadhali ingiza kiasi halali."
+                            }
+                        },
+                        "isRequired": true
+                    },
+                    {
+                        "key": "annual_salary",
+                        "label": {
+                            "en": "Your total ANNUAL salary is",
+                            "sw": "Jumla ya mshahara wako wa MWAKA ni"
+                        },
+                        "type": "text",
+                        "regex": {
+                            "value": "^[0-9]+$",
+                            "err": {
+                                "en": "Invalid input. Please enter a valid amount.",
+                                "sw": "Ingizo halali halikupatikana. Tafadhali ingiza kiasi halali."
+                            }
+                        },
+                        "isRequired": true
+                    },
+                    {
+                        "key": "last_year_bonus_income",
+                        "label": {
+                            "en": "What was your total bonus or reward income last YEAR?",
+                            "sw": "Jumla ya mapato yako ya bonasi au zawadi mwaka jana yalikuwa kiasi gani?"
+                        },
+                        "type": "text",
+                        "regex": {
+                            "value": "^[0-9]+$",
+                            "err": {
+                                "en": "Invalid input. Please enter a valid amount.",
+                                "sw": "Ingizo halali halikupatikana. Tafadhali ingiza kiasi halali."
+                            }
+                        },
+                        "isRequired": true
+                    },
+                    {
+                        "key": "annual_business_income",
+                        "label": {
+                            "en": "What is your total ANNUAL income from your business?",
+                            "sw": "Jumla ya mapato yako ya MWAKA kutoka kwa biashara yako ni kiasi gani?"
+                        },
+                        "type": "text",
+                        "regex": {
+                            "value": "^[0-9]+$",
+                            "err": {
+                                "en": "Invalid input. Please enter a valid amount.",
+                                "sw": "Ingizo halali halikupatikana. Tafadhali ingiza kiasi halali."
+                            }
+                        },
+                        "isRequired": true
+                    },
+                    {
+                        "key": "annual_supplemental_income",
+                        "label": {
+                            "en": "What is your total ANNUAL Supplemental Income from any other business or venture?",
+                            "sw": "Jumla ya mapato yako ya MWAKA kutoka kwa biashara au ubia wowote ni kiasi gani?"
+                        },
+                        "type": "text",
+                        "regex": {
+                            "value": "^[0-9]+$",
+                            "err": {
+                                "en": "Invalid input. Please enter a valid amount.",
+                                "sw": "Ingizo halali halikupatikana. Tafadhali ingiza kiasi halali."
+                            }
+                        },
+                        "isRequired": true
+                    }
+                ]
+            }
+        },
+        {
+            "step6": {
+                "next": "step7",
+                "title": {
+                    "en": "Income Sources",
+                    "sw": "Income Sources"
+                },
+                "fields": [
+                    {
+                        "key": "supplemental_income_source",
+                        "label": {
+                            "en": "Please List the Source of your Supplemental Income, if any",
+                            "sw": "Tafadhali Orodhesha Chanzo cha Mapato yako ya ziada, ikiwa yapo"
+                        },
+                        "type": "textarea",
+                        "isRequired": false
+                    },
+                    {
+                        "key": "salary_bank_statement_3months",
+                        "label": {
+                            "en": "Are you able to provide a bank statement that shows your salary over the past 3 months?",
+                            "sw": "Je, unaweza kutoa taarifa ya benki inayoonyesha mshahara wako katika kipindi cha miezi 3 iliyopita?"
+                        },
+                        "type": "radio",
+                        "isRequired": true,
+                        "options": [
+                            {
+                                "value": "Yes"
+                            },
+                            {
+                                "value": "No"
+                            }
+                        ]
+                    },
+                    {
+                        "key": "income_bank_statement_6months",
+                        "label": {
+                            "en": "If you are not a salaried employee, are you able to provide a bank statement that shows income over the past 6 months?",
+                            "sw": "Ikiwa wewe si mfanyakazi anayelipwa mshahara, je unaweza kutoa taarifa ya benki inayoonyesha mapato katika kipindi cha miezi 6 iliyopita?"
+                        },
+                        "type": "radio",
+                        "isRequired": true,
+                        "options": [
+                            {
+                                "value": "Yes"
+                            },
+                            {
+                                "value": "No"
+                            }
+                        ],
+                        "dependent-on": "salary_bank_statement_3months",
+                        "dependency_values": [
+                            "No"
+                        ]
+                    },
+                    {
+                        "key": "mobile_money_statement_6months",
+                        "label": {
+                            "en": "If you are not able to provide a bank statement, can you provide your mobile money statement that shows transactions over the past 6 months?",
+                            "sw": "Ikiwa huwezi kutoa taarifa ya benki, je unaweza kutoa taarifa yako ya pesa za kwenye simu ya mkononi kwa kipindi cha miezi 6?"
+                        },
+                        "type": "radio",
+                        "isRequired": true,
+                        "options": [
+                            {
+                                "value": "Yes"
+                            },
+                            {
+                                "value": "No"
+                            }
+                        ],
+                        "dependent-on": "salary_bank_statement_3months",
+                        "dependency_values": [
+                            "No"
+                        ]
+                    }
+                ]
+            }
+        },
+        {
+            "step7": {
+                "next": "",
+                "title": {
+                    "en": "Document Upload",
+                    "sw": "Pakia Hati"
+                },
+                "fields": [
+                    {
+                        "key": "nida_card",
+                        "label": {
+                            "en": "Please attach a copy of your NIDA Card",
+                            "sw": "Tafadhali ambatisha nakala ya kitambulisho chako cha NIDA"
+                        },
+                        "type": "file",
+                        "isRequired": true
+                    },
+                    {
+                        "key": "bank_statement_or_mobile_money_statement",
+                        "label": {
+                            "en": "Please attach a copy of your Bank Statement (6 months) or Mobile Money Statement (6 months)",
+                            "sw": "Tafadhali ambatisha nakala ya Taarifa ya Benki (miezi 6) au Taarifa ya Pesa kwa Simu ya Mkononi (miezi 6)"
+                        },
+                        "type": "file",
+                        "isRequired": true
+                    },
+                    {
+                        "key": "other_documents",
+                        "label": {
+                            "en": "Please attach any other Relevant Documents",
+                            "sw": "Nyaraka Nyinginezo"
+                        },
+                        "type": "file",
+                        "isRequired": false
+                    }
+                ]
+            }
+        }
+    ],
+    "count": 7
+}

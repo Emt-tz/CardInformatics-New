@@ -7,6 +7,11 @@ use PHPMailer\PHPMailer\Exception;
 
 class UtilsHelper
 {
+    public function log($message){
+        $output = new \Symfony\Component\Console\Output\ConsoleOutput();
+        $output->writeln($message);
+    }
+
     public function send_email($to, $subject, $msg)
     {
         $mail = new PHPMailer(true);
