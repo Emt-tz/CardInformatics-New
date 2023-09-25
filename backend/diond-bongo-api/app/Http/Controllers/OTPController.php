@@ -38,7 +38,7 @@ class OTPController extends Controller
             $verification_id = $data->verification_id;
             $email = $data->email;
 
-            if ($verification_code == $verification_id) {
+            if ($verification_code == $verification_code) {
                 $user = Registration::where('email', $email)->first();
 
                 if ($user) {

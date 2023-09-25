@@ -235,9 +235,9 @@ Nenosiri lako la muda mfupi (OTP) imetumwa kwa barua pepe yako ($email), OTP hii
 Dear $f_name,
 Your One-Time Password (OTP) has been sent to your registered email ($email), OTP expires within 5 mins.   ";
 
-            // $this->utilsHelper->message_send($p_number, $smsHtml);
-            // $this->utilsHelper->send_email($email, "CARD Informatics Notification (Account Verification)", $mailHtml);
-            // Insert user data into the database
+            $this->utilsHelper->message_send($p_number, $smsHtml);
+            $this->utilsHelper->send_email($email, "CARD Informatics Notification (Account Verification)", $mailHtml);
+            //Insert user data into the database
             $user = new Registration();
             $user->nida_no = $nida_no;
             $user->passport_no = $passport_no;
@@ -352,9 +352,9 @@ Nenosiri lako la muda mfupi (OTP) imetumwa kwa barua pepe yako ($email), OTP hii
 Dear $f_name,
 Your One-Time Password (OTP) has been sent to your registered email ($email), OTP expires within 5 mins.   ";
 
-            // $this->utilsHelper->message_send($p_number, $smsHtml);
-            // $this->utilsHelper->send_email($email, "CARD Informatics Notification (Account Locked)", $mailHtml);
-            // Insert user data into the database
+            $this->utilsHelper->message_send($p_number, $smsHtml);
+            $this->utilsHelper->send_email($email, "CARD Informatics Notification (Account Locked)", $mailHtml);
+            //Insert user data into the database
             $user = new Registration();
             $user->nida_no = $nida_no;
             $user->f_name = $f_name;
