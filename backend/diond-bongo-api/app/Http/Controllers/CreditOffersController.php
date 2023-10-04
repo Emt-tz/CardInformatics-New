@@ -48,4 +48,33 @@ class CreditOffersController extends Controller
             return $this->response->sendFailureResponse('Failed, Invalid user ID');
         }
     }
+
+    public function handleGetCreditOffersDetails($offer_id){
+        if($offer_id){
+            $creditOffers = CreditOffer::where('id', $offer_id)->get();
+            $response = [];
+            foreach ($creditOffers as $offer) {
+                $creditOffer = [
+                    'Type of Financial Institution' => $offer->institution_type,
+                    'Number of Employees / Idadi ya Wafanyakazi' => $offer->number_of_employees,
+                    'Loans Disbursed in 3 yrs' => $offer->loan_history,
+                    'Credit Type / Aina ya Mkopo' => $offer->credit_type,
+                    'Credit Product / Bidhaa ya Mkopo' => $offer->credit_product,
+                    'Credit Limit / Ukomo wa Mkopo' => $offer->credit_limit,
+                    'Interest Charge / Malipo ya Riba' => $offer->interest_charge,
+                    'Annual Fee / Ada ya Mwaka' => $offer->annual_fee,
+                    'Late Payment Fee / Ada ya Malipo ya Kuchelewa' => $offer->late_payment_fee,
+                    'Other Fee / Ada Nyingine' => $offer->other_fee,
+                    'Payback Period / Kipindi cha Malipo' => $offer->payback_periods,
+                    'Application Deadline / Mwisho wa kutuma maombi' => $offer->app_deadline,
+                    'Product Promotional Content / Maudhui ya Utangazaji wa Mkopo' => $offer->additional_info,
+                    'id'              => (string) $offer->id,
+                ];
+                $response[] = $creditOffer;
+            }
+            return $this->response->sendSuccessResponse($response);
+        } else {
+            return $this->response->sendFailureResponse('Failed, No offer id provided');
+        }
+    }
 }

@@ -25,3 +25,4 @@ Route::get('/loan/{email}',[LoanController::class, 'handleGetUserLoans']);
 Route::get('/loan/{email}?loan_status=Approved',[LoanController::class, 'handleGetUserLoans']);
 // credit offers
 Route::get('/credit/offers', [CreditOffersController::class, 'handleLoadCreditOffers']);
+Route::get('/credit/offers/{id}', [CreditOffersController::class, 'handleGetCreditOffersDetails']);

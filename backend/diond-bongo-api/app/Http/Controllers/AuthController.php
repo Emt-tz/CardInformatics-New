@@ -164,7 +164,7 @@ class AuthController extends Controller
             'l_name' => 'required',
             'birth_date' => 'required|date',
             'gender' => 'required',
-            'marital status' => 'required',
+            'marital_status' => 'required',
             'p_number' => 'required|unique:registration,p_number|min:11',
             'citizenship' => 'required',
             'email' => 'required|email|unique:registration,email',
@@ -244,8 +244,7 @@ Your One-Time Password (OTP) has been sent to your registered email ($email), OT
             $user->tin_no = $tin_no;
             $user->f_name = $f_name;
             $user->l_name = $l_name;
-            $temp_birth_date = date_create($birth_date);
-            $user->birth_date = date_format($temp_birth_date, 'd/m/Y');
+            $user->birth_date = DateTime::createFromFormat('d/m/Y', $birth_date);
             $user->gender = $gender;
             $user->marital_status = $marital_status;
             $user->p_number = $p_number;
