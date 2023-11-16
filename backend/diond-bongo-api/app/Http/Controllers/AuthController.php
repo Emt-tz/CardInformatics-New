@@ -2,14 +2,14 @@
 
 namespace App\Http\Controllers;
 
+use App\Helpers\UtilsHelper;
+use App\Http\Controllers\Controller;
 use App\Models\Loginlog;
 use App\Models\Registration;
+use DateTime;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
-use App\Helpers\UtilsHelper;
 use Illuminate\Support\Facades\Validator;
-use App\Http\Controllers\Controller;
-use DateTime;
 
 class AuthController extends Controller
 {
@@ -41,8 +41,8 @@ class AuthController extends Controller
 
             // Process data and validate user credentials
             $user = Registration::where('email', $username)
-            ->orWhere('p_number', $username)
-            ->first();
+                ->orWhere('p_number', $username)
+                ->first();
 
             if ($user) {
                 if ($user->status == 0) {
@@ -146,7 +146,7 @@ class AuthController extends Controller
             return $this->handleForeignerRegistration($request);
         } else {
             $response = array(
-                'fail_notification' => "Invalid Request"
+                'fail_notification' => "Invalid Request",
             );
             return response()->json($response, 400);
         }
@@ -228,16 +228,12 @@ class AuthController extends Controller
                     </span></i>
                   </p>";
 
-
             $smsHtml = "Ndugu $f_name,
 Nenosiri lako la muda mfupi (OTP) imetumwa kwa barua pepe yako ($email), OTP hii inaisha ndani ya dakika 3.
 
 Dear $f_name,
-Your One-Time Password (OTP) has been sent to your registered email ($email), OTP expires within 5 mins.   ";
+Your One-Time Password (OTP) has been sent to your registered email ($email), OTP expires within 3 mins.   ";
 
-            $this->utilsHelper->message_send($p_number, $smsHtml);
-            $this->utilsHelper->send_email($email, "CARD Informatics Notification (Account Verification)", $mailHtml);
-            //Insert user data into the database
             $user = new Registration();
             $user->nida_no = $nida_no;
             $user->passport_no = $passport_no;
@@ -253,19 +249,27 @@ Your One-Time Password (OTP) has been sent to your registered email ($email), OT
             $user->security_question = $security_question;
             $user->security_answer = $security_answer;
             $user->password = $password;
-            $user->date  = date('d/m/Y H:i');
+            $user->date = date('d/m/Y H:i');
             $user->save();
-            // Return a success response
-            return response()->json([
-                'success_notification' => [
-                    'Verification_send' => $verification_id,
-                    'rec_prefix' => $rec_prefix,
-                    'email' => $email,
-                    'start' => time(),
-                    'expire' => time() + (60 * 5),
-                    'message' => 'Your account has been created. Please check your Mobile Phone or Email for one-time passcode! Be sure to check your spam mailbox if the message is not in your inbox.',
-                ],
-            ], 200);
+            try {
+                $this->utilsHelper->message_send($p_number, $smsHtml);
+                $this->utilsHelper->send_email($email, "CARD Informatics Notification (Account Verification)", $mailHtml);
+                // Return a success response
+                return response()->json([
+                    'success_notification' => [
+                        'Verification_send' => $verification_id,
+                        'rec_prefix' => $rec_prefix,
+                        'email' => $email,
+                        'start' => time(),
+                        'expire' => time() + (60 * 5),
+                        'message' => 'Your account has been created. Please check your Mobile Phone or Email for one-time passcode! Be sure to check your spam mailbox if the message is not in your inbox.',
+                    ],
+                ], 200);
+            } catch (\Exception $e) {
+                return response()->json([
+                    'fail_notification' => 'Registration failed. Please try again' . $e->getMessage(),
+                ], 500);
+            }
         } catch (\Exception $e) {
             // Handle any exceptions (e.g., database errors)
             return response()->json([
@@ -344,15 +348,11 @@ Your One-Time Password (OTP) has been sent to your registered email ($email), OT
                     </span></i>
                   </p>";
 
-
             $smsHtml = "Ndugu $f_name,
 Nenosiri lako la muda mfupi (OTP) imetumwa kwa barua pepe yako ($email), OTP hii inaisha ndani ya dakika 3.
 
 Dear $f_name,
-Your One-Time Password (OTP) has been sent to your registered email ($email), OTP expires within 5 mins.   ";
-
-            $this->utilsHelper->message_send($p_number, $smsHtml);
-            $this->utilsHelper->send_email($email, "CARD Informatics Notification (Account Locked)", $mailHtml);
+Your One-Time Password (OTP) has been sent to your registered email ($email), OTP expires within 3 mins.   ";
             //Insert user data into the database
             $user = new Registration();
             $user->nida_no = $nida_no;
@@ -367,19 +367,27 @@ Your One-Time Password (OTP) has been sent to your registered email ($email), OT
             $user->security_question = $security_question;
             $user->security_answer = $security_answer;
             $user->password = $password;
-            $user->date  = date('d/m/Y H:i');
+            $user->date = date('d/m/Y H:i');
             $user->save();
-            // Return a success response
-            return response()->json([
-                'success_notification' => [
-                    'Verification_send' => (int) $verification_id,
-                    'rec_prefix' => $rec_prefix,
-                    'email' => $email,
-                    'start' => time(),
-                    'expire' => time() + (60 * 5),
-                    'message' => 'Your account has been created. Please check your Mobile Phone or Email for one-time passcode! Be sure to check your spam mailbox if the message is not in your inbox.',
-                ],
-            ], 200);
+            try {
+                $this->utilsHelper->message_send($p_number, $smsHtml);
+                $this->utilsHelper->send_email($email, "CARD Informatics Notification (Account Verification)", $mailHtml);
+                // Return a success response
+                return response()->json([
+                    'success_notification' => [
+                        'Verification_send' => $verification_id,
+                        'rec_prefix' => $rec_prefix,
+                        'email' => $email,
+                        'start' => time(),
+                        'expire' => time() + (60 * 5),
+                        'message' => 'Your account has been created. Please check your Mobile Phone or Email for one-time passcode! Be sure to check your spam mailbox if the message is not in your inbox.',
+                    ],
+                ], 200);
+            } catch (\Exception $e) {
+                return response()->json([
+                    'fail_notification' => 'Registration failed. Please try again' . $e->getMessage(),
+                ], 500);
+            }
         } catch (\Exception $e) {
             // Handle any exceptions (e.g., database errors)
             return response()->json([

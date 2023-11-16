@@ -194,9 +194,6 @@ class UserController extends Controller
             $registration->password = $password;
 
             $registration->save();
-
-            // Your email sending code here...
-
             return response()->json(['success_notification' => 'Success']);
         }
     }
